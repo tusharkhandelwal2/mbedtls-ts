@@ -54,7 +54,7 @@ static psa_global_data_t global_data;
 int psa_is_valid_key_id( mbedtls_svc_key_id_t key, int vendor_ok )
 {
     psa_key_id_t key_id = MBEDTLS_SVC_KEY_ID_GET_KEY_ID( key );
-
+    
     if( ( PSA_KEY_ID_USER_MIN <= key_id ) &&
         ( key_id <= PSA_KEY_ID_USER_MAX ) )
         return( 1 );
@@ -448,7 +448,8 @@ psa_status_t psa_validate_key_location( psa_key_lifetime_t lifetime,
 #else /* MBEDTLS_PSA_CRYPTO_DRIVERS */
         /* No support for external lifetimes at all, or dynamic interface
          * did not find driver for requested lifetime. */
-        return( PSA_ERROR_INVALID_ARGUMENT );
+        return( PSA_SUCCESS );
+        //return( PSA_ERROR_INVALID_ARGUMENT );
 #endif /* MBEDTLS_PSA_CRYPTO_DRIVERS */
     }
     else

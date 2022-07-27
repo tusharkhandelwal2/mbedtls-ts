@@ -594,7 +594,7 @@ psa_status_t psa_driver_wrapper_import_key(
     psa_status_t status = PSA_ERROR_CORRUPTION_DETECTED;
     psa_key_location_t location = PSA_KEY_LIFETIME_GET_LOCATION(
                                       psa_get_key_lifetime( attributes ) );
-
+    //long unsigned int i;
     /* Try dynamically-registered SE interface first */
 #if defined(MBEDTLS_PSA_CRYPTO_SE_C)
     const psa_drv_se_t *drv;
@@ -642,10 +642,13 @@ psa_status_t psa_driver_wrapper_import_key(
 #endif /* PSA_CRYPTO_DRIVER_TEST */
 #endif /* PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT */
             /* Fell through, meaning no accelerator supports this operation */
-            return( psa_import_key_into_slot( attributes,
+           
+            status =  psa_import_key_into_slot( attributes,
                                               data, data_length,
                                               key_buffer, key_buffer_size,
-                                              key_buffer_length, bits ) );
+                                              key_buffer_length, bits );
+           
+            return status;
         /* Add cases for opaque driver here */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)
 #if defined(PSA_CRYPTO_DRIVER_TEST)
